@@ -1,0 +1,24 @@
+{
+  "name": "vehicle-inspection-api",
+  "version": "1.0.0",
+  "description": "api for vehicle inspection app to generate reports mechanic staff related",
+  "license": "ISC",
+  "author": "Ing.Claudio Gonzalez",
+  "type": "module",
+  "main": "./src/App.js",
+  "scripts": {
+    "id": "scripts",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.1",
+    "nodemon": "^3.1.14"
+  }
+}

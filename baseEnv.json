@@ -1,0 +1,5 @@
+{
+    "PORT":3000,
+    "MONGO_URI": "mongodb+srv://vehicleAdminDB:kurN3CQRe9YUdes3@vehicle-inspection-data.tjqgr3u.mongodb.net/?appName=vehicle-inspection-database-app",
+    "JWT_SECRET": "supersecret"
+}
