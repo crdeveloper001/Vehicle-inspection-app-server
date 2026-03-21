@@ -155,7 +155,45 @@ const downloadInspectionPDF = async (req, res) => {
   }
 };
 
+const getAllInspections = async (req, res) => {
+  try {
+    const inspections = await Inspection.find().sort({ createdAt: -1 });
+
+    if (!inspections.length) {
+      return res.status(404).json({ message: "No se encontraron inspecciones" });
+    } else {
+      res.json(inspections);
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+const updateInspectionSelected = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { update } = req.body;
+
+    const inspection = await Inspection.findById(id);
+
+    if (!inspection) {
+      return res.status(404).json({ message: "Inspección no encontrada" });
+    }
+
+    inspection.selected = selected;
+    await inspection.save();
+
+    res.json({ message: "Inspección actualizada", inspection });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 export {
-  createInspectionAndPDF, 
-  downloadInspectionPDF
+  createInspectionAndPDF,
+  downloadInspectionPDF,
+  getAllInspections,
+  updateInspectionSelected
 };

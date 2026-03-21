@@ -1,33 +1,40 @@
 import mongoose from "mongoose";
 
-const PurchaseReviewReport = new mongoose.Schema({
-  marca: String,
-  modelo: String,
-  anio: Number,
-  placa: String,
-  vin: String,
-  kilometraje: String,
+const purchaseReviewReportSchema = new mongoose.Schema(
+  {
+    // Vehicle Information
+    marca: String,
+    modelo: String,
+    anio: Number,
+    placa: String,
+    vin: String,
+    kilometraje: String,
 
-  motor_estado: String,
-  motor_obs: String,
+    // Motor
+    motor_estado: String,
+    motor_obs: String,
 
-  frenos_estado: String,
-  frenos_obs: String,
+    // Brakes
+    frenos_estado: String,
+    frenos_obs: String,
 
-  suspension_estado: String,
-  suspension_obs: String,
+    // Suspension
+    suspension_estado: String,
+    suspension_obs: String,
 
-  carroceria: String,
-  interior: String,
-  llantas: String,
+    // Other Components
+    carroceria: String,
+    interior: String,
+    llantas: String,
 
-  conclusion: String,
+    // Report
+    conclusion: String,
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  },
+  { timestamps: true }
+);
 
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }
-
-}, { timestamps: true });
-
-export default mongoose.model("PurchaseReviewReport", PurchaseReviewReport);
+export default mongoose.model("PurchaseReviewReport", purchaseReviewReportSchema);

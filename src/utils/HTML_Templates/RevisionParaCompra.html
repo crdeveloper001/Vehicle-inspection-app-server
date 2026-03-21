@@ -1,213 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Reporte de Inspección Vehicular</title>
-    <style>
-        @page {
-            size: A4;
-            margin: 20mm;
-        }
+<meta charset="UTF-8">
+<title>Reporte de Inspección Vehicular</title>
 
-        body {
-            -webkit-print-color-adjust: exact;
-        }
+<style>
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            color: #333;
-        }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2c3e50;
+    font-size: 13px;
+  }
 
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-        }
+  h1, h2 {
+    margin: 0;
+  }
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #007BFF;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
 
-        .section {
-            margin-top: 20px;
-        }
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+  }
 
-        .section h2 {
-            background: #f4f4f4;
-            padding: 8px;
-            font-size: 16px;
-            border-left: 4px solid #007BFF;
-        }
+  .meta {
+    text-align: right;
+    font-size: 12px;
+    color: #555;
+  }
 
-        .grid {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
+  /* CARDS */
+  .card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 15px;
+  }
 
-        .grid div {
-            flex: 1;
-        }
+  .card h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #007BFF;
+  }
 
-        .field {
-            margin: 5px 0;
-        }
+  /* GRID */
+  .grid {
+    display: flex;
+    gap: 20px;
+  }
 
-        .label {
-            font-weight: bold;
-        }
+  .col {
+    flex: 1;
+  }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+  .field {
+    margin-bottom: 6px;
+  }
 
-        table,
-        th,
-        td {
-            border: 1px solid #ccc;
-        }
+  .label {
+    font-weight: bold;
+    color: #555;
+  }
 
-        th {
-            background: #eee;
-            padding: 8px;
-            text-align: left;
-        }
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
 
-        td {
-            padding: 8px;
-        }
+  th {
+    background: #007BFF;
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+  }
 
-        .status-ok {
-            color: green;
-            font-weight: bold;
-        }
+  td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
 
-        .status-bad {
-            color: red;
-            font-weight: bold;
-        }
+  tr:nth-child(even) {
+    background: #f9f9f9;
+  }
 
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
-        }
+  /* STATUS BADGES */
+  .badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+  }
 
-        .signature {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-        }
+  .ok {
+    background: #28a745;
+  }
 
-        .signature div {
-            text-align: center;
-            width: 45%;
-        }
+  .bad {
+    background: #dc3545;
+  }
 
-        .line {
-            border-top: 1px solid #000;
-            margin-top: 40px;
-        }
-    </style>
+  /* CONCLUSION */
+  .conclusion {
+    background: #f4f6f8;
+    padding: 10px;
+    border-left: 4px solid #007BFF;
+    margin-top: 10px;
+  }
+
+  /* SIGNATURE */
+  .signature {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .signature div {
+    text-align: center;
+    width: 40%;
+  }
+
+  .line {
+    border-top: 1px solid #000;
+    margin-top: 40px;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+  }
+
+</style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>Reporte de Inspección Vehicular</h1>
-        <p>Fecha: {{fecha}}</p>
-    </div>
+<!-- HEADER -->
+<div class="header">
+  <div class="title">Reporte de Inspección</div>
+  <div class="meta">
+    Fecha: {{fecha}} <br>
+    ID: {{id}}
+  </div>
+</div>
 
-    <div class="section">
-        <h2>Información del Vehículo</h2>
-        <div class="grid">
-            <div>
-                <div class="field"><span class="label">Marca:</span> {{marca}}</div>
-                <div class="field"><span class="label">Modelo:</span> {{modelo}}</div>
-                <div class="field"><span class="label">Año:</span> {{anio}}</div>
-            </div>
-            <div>
-                <div class="field"><span class="label">Placa:</span> {{placa}}</div>
-                <div class="field"><span class="label">VIN:</span> {{vin}}</div>
-                <div class="field"><span class="label">Kilometraje:</span> {{kilometraje}}</div>
-            </div>
-        </div>
+<!-- INFO VEHICULO -->
+<div class="card">
+  <h2>Información del Vehículo</h2>
+  <div class="grid">
+    <div class="col">
+      <div class="field"><span class="label">Marca:</span> {{marca}}</div>
+      <div class="field"><span class="label">Modelo:</span> {{modelo}}</div>
+      <div class="field"><span class="label">Año:</span> {{anio}}</div>
     </div>
+    <div class="col">
+      <div class="field"><span class="label">Placa:</span> {{placa}}</div>
+      <div class="field"><span class="label">VIN:</span> {{vin}}</div>
+      <div class="field"><span class="label">Kilometraje:</span> {{kilometraje}}</div>
+    </div>
+  </div>
+</div>
 
-    <div class="section">
-        <h2>Estado General</h2>
-        <table>
-            <tr>
-                <th>Componente</th>
-                <th>Estado</th>
-                <th>Observaciones</th>
-            </tr>
-            <tr>
-                <td>Motor</td>
-                <td class="status-ok">{{motor_estado}}</td>
-                <td>{{motor_obs}}</td>
-            </tr>
-            <tr>
-                <td>Frenos</td>
-                <td class="status-ok">{{frenos_estado}}</td>
-                <td>{{frenos_obs}}</td>
-            </tr>
-            <tr>
-                <td>Suspensión</td>
-                <td class="status-bad">{{suspension_estado}}</td>
-                <td>{{suspension_obs}}</td>
-            </tr>
-        </table>
-    </div>
+<!-- ESTADO GENERAL -->
+<div class="card">
+  <h2>Estado General</h2>
+  <table>
+  <tr>
+    <th>Componente</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
+  </tr>
 
-    <div class="section">
-        <h2>Inspección Visual</h2>
-        <table>
-            <tr>
-                <th>Área</th>
-                <th>Condición</th>
-            </tr>
-            <tr>
-                <td>Carrocería</td>
-                <td>{{carroceria}}</td>
-            </tr>
-            <tr>
-                <td>Interior</td>
-                <td>{{interior}}</td>
-            </tr>
-            <tr>
-                <td>Llantas</td>
-                <td>{{llantas}}</td>
-            </tr>
-        </table>
-    </div>
+  {{#each componentes}}
+  <tr>
+    <td>{{nombre}}</td>
 
-    <div class="section">
-        <h2>Conclusión</h2>
-        <p>{{conclusion}}</p>
-    </div>
+    <td>
+      <span class="{{estadoClass}}">
+        {{estado}}
+      </span>
+    </td>
 
-    <div class="signature">
-        <div>
-            <div class="line"></div>
-            <p>Inspector</p>
-        </div>
-        <div>
-            <div class="line"></div>
-            <p>Cliente</p>
-        </div>
-    </div>
+    <td>{{obs}}</td>
+  </tr>
+  {{/each}}
 
-    <div class="footer">
-        <p>Reporte generado automáticamente</p>
-    </div>
+</table>
+</div>
+
+<!-- INSPECCION VISUAL -->
+<div class="card">
+  <h2>Inspección Visual</h2>
+  <table>
+    <tr>
+      <th>Área</th>
+      <th>Condición</th>
+    </tr>
+    <tr>
+      <td>Carrocería</td>
+      <td>{{carroceria}}</td>
+    </tr>
+    <tr>
+      <td>Interior</td>
+      <td>{{interior}}</td>
+    </tr>
+    <tr>
+      <td>Llantas</td>
+      <td>{{llantas}}</td>
+    </tr>
+  </table>
+</div>
+
+<!-- CONCLUSION -->
+<div class="card">
+  <h2>Conclusión</h2>
+  <div class="conclusion">
+    {{conclusion}}
+  </div>
+</div>
+
+<!-- FIRMAS -->
+<div class="signature">
+  <div>
+    <div class="line"></div>
+    <p>Inspector</p>
+  </div>
+  <div>
+    <div class="line"></div>
+    <p>Cliente</p>
+  </div>
+</div>
+
+<div class="footer">
+  Reporte generado automáticamente • Sistema de Inspección
+</div>
 
 </body>
-
 </html>
