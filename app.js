@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 
 import authRoutes from "./src/routes/auth.routes.js";
 import api_routes from "./src/routes/api.routes.js";
+import profileRoutes from "./src/routes/profile.routes.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/profiles", profileRoutes);
 app.use("/api/", api_routes);
 
 app.listen(process.env.PORT, () => {

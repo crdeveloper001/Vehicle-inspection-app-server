@@ -6,27 +6,35 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   try {
     /**Extraer los campos necesarios del cuerpo de la solicitud */
-    const { name, email, password,lastName,phone,userType } = req.body;
+    const { name, email, password, lastName, phone, userType, IsProfileNew, IsPasswordChanged } = req.body;
 
     const exists = await User.findOne({ email });
     if (exists) {
       return res.status(400).json({ message: "Usuario ya existe" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    /**Generar el payload object a la base de datos en mongo */
-    const user = new User({
-      name,
-      email,
-      lastName,
-      phone,
-      userType,
-      password: hashedPassword,
-    });
+    if (IsProfileNew && !IsPasswordChanged) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      /**Generar el payload object a la base de datos en mongo */
+      const user = new User({
+        name,
+        email,
+        lastName,
+        phone,
+        userType,
+        password: hashedPassword,
+        IsProfileNew,
+        IsPasswordChanged,
+      });
 
-    await user.save();
+      await user.save();
 
-    res.json({ message: "Usuario creado con exito" });
+      res.json({ message: "Usuario creado con exito" });
+    }else{
+      res.status(400).json({ message: "Invalid profile state" });
+    }
+
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

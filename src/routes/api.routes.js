@@ -13,10 +13,8 @@ router.get("/profile", authMiddleware, (req, res) => {
 
 // 🔥 crear + guardar + generar PDF
 router.post("/inspections", authMiddleware, controller.createInspectionAndPDF);
-
-// 🔥 descargar PDF por ID
+// descargar PDF por ID
 router.get("/inspections/:id/pdf", controller.downloadInspectionPDF);
-
 //obtener todas las inspecciones del usuario
 router.get("/inspections", controller.getAllInspections);
 //actualizar el campo selected de una inspección
