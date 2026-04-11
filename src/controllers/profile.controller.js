@@ -1,12 +1,13 @@
 import User from "../models/Users.js";
+import bcrypt from "bcrypt";
 
 // Create a new profile
 export const createProfile = async (req, res) => {
   try {
-    const { name, lastName, phone, userType, email, password } = req.body;
+    const { name, lastName, phone, userType, email, password, IsProfileNew, IsPasswordChanged } = req.body;
 
     // Validate required fields
-    if (!name || !email ) {
+    if (!name || !email) {
       return res.status(400).json({
         success: false,
         message: "Name, email, and password are required fields",
@@ -30,7 +31,11 @@ export const createProfile = async (req, res) => {
       userType,
       email,
       password,
+      IsProfileNew,
+      IsPasswordChanged,
     });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    newUser.password = hashedPassword;
 
     const savedUser = await newUser.save();
 
@@ -108,7 +113,7 @@ export const getProfileById = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, lastName, phone, userType, email, password } = req.body;
+    const { name, lastName, phone, userType, email, password, IsProfileNew, IsPasswordChanged } = req.body;
 
     // Validate MongoDB ID format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -118,14 +123,76 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    // Build update object with only provided fields
+    // Build update object and validate each field
     const updateData = {};
-    if (name !== undefined) updateData.name = name;
-    if (lastName !== undefined) updateData.lastName = lastName;
-    if (phone !== undefined) updateData.phone = phone;
-    if (userType !== undefined) updateData.userType = userType;
-    if (email !== undefined) updateData.email = email;
-    if (password !== undefined) updateData.password = password;
+
+    if (!name || name === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Name is required",
+      });
+    }
+    updateData.name = name;
+
+    if (!lastName || lastName === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Last name is required",
+      });
+    }
+    updateData.lastName = lastName;
+
+    if (!phone || phone === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Phone is required",
+      });
+    }
+    updateData.phone = phone;
+
+    if (!userType || userType === "") {
+      return res.status(400).json({
+        success: false,
+        message: "User type is required",
+      });
+    }
+    updateData.userType = userType;
+
+    if (!email || email === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required",
+      });
+    }
+    updateData.email = email;
+
+    if (!password || password === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Password is required",
+      });
+    }
+    updateData.password = password;
+
+    if (IsProfileNew === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "IsProfileNew is required",
+      });
+    }
+    updateData.IsProfileNew = IsProfileNew;
+
+    if (IsPasswordChanged === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "IsPasswordChanged is required",
+      });
+    }
+    updateData.IsPasswordChanged = IsPasswordChanged;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    updateData.password = hashedPassword;
+
 
     // Check if user exists
     const user = await User.findById(id);
