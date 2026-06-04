@@ -2,30 +2,35 @@ import mongoose from "mongoose";
 
 const purchaseReviewReportSchema = new mongoose.Schema(
   {
-    // Vehicle Information
-    marca: String,
-    modelo: String,
-    anio: Number,
-    placa: String,
-    vin: String,
-    kilometraje: String,
+    //Client Information
+    clientName: String,
+    clientLastname: String,
+    clientPhone: String,
 
-    // Motor
-    motor_estado: String,
-    motor_obs: String,
+    // Vehicle Information
+    make: String,
+    model: String,
+    year: Number,
+    plate: String,
+    vin: String,
+    mileage: String,
+
+    // Engine
+    engineCondition: String,
+    engineNotes: String,
 
     // Brakes
-    frenos_estado: String,
-    frenos_obs: String,
+    brakeCondition: String,
+    brakeNotes: String,
 
     // Suspension
-    suspension_estado: String,
-    suspension_obs: String,
+    suspensionCondition: String,
+    suspensionNotes: String,
 
     // Other Components
-    carroceria: String,
+    body: String,
     interior: String,
-    llantas: String,
+    tires: String,
 
     // Report
     conclusion: String,

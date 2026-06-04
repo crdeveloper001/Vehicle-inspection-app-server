@@ -3,9 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-import authRoutes from "./src/routes/auth.routes.js";
-import api_routes from "./src/routes/api.routes.js";
-import profileRoutes from "./src/routes/profile.routes.js";
+import auth_Routes from "./src/routes/auth.routes.js";
+import purchase_review_reporte_routes from "./src/routes/purchase_review_report.routes.js";
+import profile_Routes from "./src/routes/profile.routes.js";
+import clients_Routes from "./src/routes/clients.route.js";
 
 dotenv.config();
 
@@ -22,9 +23,10 @@ mongoose
   .catch((err) => console.error(err));
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/profiles", profileRoutes);
-app.use("/api/", api_routes);
+app.use("/api/auth", auth_Routes);
+app.use("/api/profiles", profile_Routes);
+app.use("/api/inspections", purchase_review_reporte_routes);
+app.use("/api/clients", clients_Routes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Servidor corriendo en puerto ${process.env.PORT}`);

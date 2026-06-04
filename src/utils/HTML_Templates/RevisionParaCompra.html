@@ -154,10 +154,24 @@
 
 <!-- HEADER -->
 <div class="header">
-  <div class="title">Reporte de Inspección</div>
+  <div class="title">Reporte de Inspección Para Compra Vehicular</div>
   <div class="meta">
-    Fecha: {{fecha}} <br>
-    ID: {{id}}
+    Fecha: {{createdAt}} <br>
+    ID: {{_id}}
+  </div>
+</div>
+
+<!-- CLIENTE -->
+<div class="card">
+  <h2>Información del Cliente</h2>
+  <div class="grid">
+    <div class="col">
+      <div class="field"><span class="label">Nombre:</span> {{clientName}}</div>
+      <div class="field"><span class="label">Apellido:</span> {{clientLastname}}</div>
+    </div>
+    <div class="col">
+      <div class="field"><span class="label">Teléfono:</span> {{clientPhone}}</div>
+    </div>
   </div>
 </div>
 
@@ -166,14 +180,14 @@
   <h2>Información del Vehículo</h2>
   <div class="grid">
     <div class="col">
-      <div class="field"><span class="label">Marca:</span> {{marca}}</div>
-      <div class="field"><span class="label">Modelo:</span> {{modelo}}</div>
-      <div class="field"><span class="label">Año:</span> {{anio}}</div>
+      <div class="field"><span class="label">Marca:</span> {{make}}</div>
+      <div class="field"><span class="label">Modelo:</span> {{model}}</div>
+      <div class="field"><span class="label">Año:</span> {{year}}</div>
     </div>
     <div class="col">
-      <div class="field"><span class="label">Placa:</span> {{placa}}</div>
+      <div class="field"><span class="label">Placa:</span> {{plate}}</div>
       <div class="field"><span class="label">VIN:</span> {{vin}}</div>
-      <div class="field"><span class="label">Kilometraje:</span> {{kilometraje}}</div>
+      <div class="field"><span class="label">Kilometraje:</span> {{mileage}}</div>
     </div>
   </div>
 </div>
@@ -215,7 +229,7 @@
     </tr>
     <tr>
       <td>Carrocería</td>
-      <td>{{carroceria}}</td>
+      <td>{{body}}</td>
     </tr>
     <tr>
       <td>Interior</td>
@@ -223,7 +237,7 @@
     </tr>
     <tr>
       <td>Llantas</td>
-      <td>{{llantas}}</td>
+      <td>{{tires}}</td>
     </tr>
   </table>
 </div>
@@ -236,20 +250,8 @@
   </div>
 </div>
 
-<!-- FIRMAS -->
-<div class="signature">
-  <div>
-    <div class="line"></div>
-    <p>Inspector</p>
-  </div>
-  <div>
-    <div class="line"></div>
-    <p>Cliente</p>
-  </div>
-</div>
-
 <div class="footer">
-  Reporte generado automáticamente • Sistema de Inspección
+ Reporte Generado Jefry Chacon / Mecanico Automotriz
 </div>
 
 </body>

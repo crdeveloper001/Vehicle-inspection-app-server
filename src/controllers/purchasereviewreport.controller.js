@@ -7,7 +7,7 @@ const createInspectionAndPDF = async (req, res) => {
     const dataFromFrontend = req.body;
 
     // ✅ Validación básica
-    if (!dataFromFrontend.placa || !dataFromFrontend.marca) {
+    if (!dataFromFrontend.plate || !dataFromFrontend.make) {
       return res.status(400).json({ message: "Datos incompletos" });
     }
 
@@ -22,41 +22,43 @@ const createInspectionAndPDF = async (req, res) => {
     // 🧠 2. Preparar datos para template
     const data = {
       fecha: new Date().toLocaleDateString(),
-
-      marca: inspection.marca,
-      modelo: inspection.modelo,
-      anio: inspection.anio,
-      placa: inspection.placa,
+      clientName: inspection.clientName,
+      clientLastname: inspection.clientLastname,
+      clientPhone: inspection.clientPhone,
+      make: inspection.make,
+      model: inspection.model,
+      year: inspection.year,
+      plate: inspection.plate,
       vin: inspection.vin,
-      kilometraje: inspection.kilometraje,
+      mileage: inspection.mileage,
 
       componentes: [
         {
           nombre: "Motor",
-          estado: inspection.motor_estado,
+          estado: inspection.engineCondition,
           estadoClass:
-            inspection.motor_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.motor_obs,
+            inspection.engineCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.engineNotes,
         },
         {
           nombre: "Frenos",
-          estado: inspection.frenos_estado,
+          estado: inspection.brakeCondition,
           estadoClass:
-            inspection.frenos_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.frenos_obs,
+            inspection.brakeCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.brakeNotes,
         },
         {
           nombre: "Suspensión",
-          estado: inspection.suspension_estado,
+          estado: inspection.suspensionCondition,
           estadoClass:
-            inspection.suspension_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.suspension_obs,
+            inspection.suspensionCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.suspensionNotes,
         },
       ],
 
-      carroceria: inspection.carroceria,
+      body: inspection.body,
       interior: inspection.interior,
-      llantas: inspection.llantas,
+      tires: inspection.tires,
       conclusion: inspection.conclusion,
     };
 
@@ -96,40 +98,43 @@ const downloadInspectionPDF = async (req, res) => {
     const data = {
       fecha: new Date(inspection.createdAt).toLocaleDateString(),
 
-      marca: inspection.marca,
-      modelo: inspection.modelo,
-      anio: inspection.anio,
-      placa: inspection.placa,
+      clientName: inspection.clientName,
+      clientLastname: inspection.clientLastname,
+      clientPhone: inspection.clientPhone,
+      make: inspection.make,
+      model: inspection.model,
+      year: inspection.year,
+      plate: inspection.plate,
       vin: inspection.vin,
-      kilometraje: inspection.kilometraje,
+      mileage: inspection.mileage,
 
       componentes: [
         {
           nombre: "Motor",
-          estado: inspection.motor_estado,
+          estado: inspection.engineCondition,
           estadoClass:
-            inspection.motor_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.motor_obs,
+            inspection.engineCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.engineNotes,
         },
         {
           nombre: "Frenos",
-          estado: inspection.frenos_estado,
+          estado: inspection.brakeCondition,
           estadoClass:
-            inspection.frenos_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.frenos_obs,
+            inspection.brakeCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.brakeNotes,
         },
         {
           nombre: "Suspensión",
-          estado: inspection.suspension_estado,
+          estado: inspection.suspensionCondition,
           estadoClass:
-            inspection.suspension_estado === "Bueno" ? "status-ok" : "status-bad",
-          obs: inspection.suspension_obs,
+            inspection.suspensionCondition === "Bueno" ? "status-ok" : "status-bad",
+          obs: inspection.suspensionNotes,
         },
       ],
 
-      carroceria: inspection.carroceria,
+      body: inspection.body,
       interior: inspection.interior,
-      llantas: inspection.llantas,
+      tires: inspection.tires,
       conclusion: inspection.conclusion,
     };
 
@@ -172,16 +177,46 @@ const getAllInspections = async (req, res) => {
 };
 const updateInspectionSelected = async (req, res) => {
   try {
+   
     const { id } = req.params;
-    const { update } = req.body;
+    const update = req.body;
+
 
     const inspection = await Inspection.findById(id);
+    
 
     if (!inspection) {
       return res.status(404).json({ message: "Inspección no encontrada" });
     }
 
-    inspection.selected = selected;
+    const allowedFields = [
+      "clientName",
+      "clientLastname",
+      "clientPhone",
+      "make",
+      "model",
+      "year",
+      "plate",
+      "vin",
+      "mileage",
+      "engineCondition",
+      "engineNotes",
+      "brakeCondition",
+      "brakeNotes",
+      "suspensionCondition",
+      "suspensionNotes",
+      "body",
+      "interior",
+      "tires",
+      "conclusion"
+    ];
+
+    allowedFields.forEach((field) => {
+      if (Object.prototype.hasOwnProperty.call(update, field)) {
+        inspection[field] = update[field];
+      }
+    });
+
     await inspection.save();
 
     res.json({ message: "Inspección actualizada", inspection });

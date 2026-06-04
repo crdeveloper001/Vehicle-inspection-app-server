@@ -18,6 +18,6 @@ router.get("/inspections/:id/pdf", controller.downloadInspectionPDF);
 //obtener todas las inspecciones del usuario
 router.get("/inspections", controller.getAllInspections);
 //actualizar el campo selected de una inspección
-router.put("/inspections/:id/selected", authMiddleware, controller.updateInspectionSelected);
+router.put("/inspections/:id", authMiddleware, controller.updateInspectionSelected);
 
 export default router;
