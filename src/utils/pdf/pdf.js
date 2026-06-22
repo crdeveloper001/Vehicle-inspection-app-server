@@ -2,7 +2,8 @@ import puppeteer from "puppeteer";
 
 async function generatePDF(html) {
   const browser = await puppeteer.launch({
-    headless: "new"
+    headless: "new",
+    executablePath: '/usr/bin/chromium-browser'
   });
 
   const page = await browser.newPage();
@@ -22,6 +23,7 @@ async function generatePDF(html) {
     }
   });
 
+ 
   await browser.close();
 
   return pdf;
