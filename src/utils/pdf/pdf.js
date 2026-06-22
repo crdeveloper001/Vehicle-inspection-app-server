@@ -1,10 +1,37 @@
 import puppeteer from "puppeteer";
 
 async function generatePDF(html) {
-  const browser = await puppeteer.launch({
-    headless: "new",
-    executablePath: '/usr/bin/chromium-browser'
-  });
+  const defaultLaunchOptions = {
+    headless: "new"
+  };
+
+  const browserPaths = [
+    process.env.CHROME_PATH,
+    '/usr/bin/chromium-browser',
+    '/usr/bin/chromium',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable'
+  ].filter(Boolean);
+
+  let browser;
+  let lastError;
+
+  for (const executablePath of [undefined, ...browserPaths]) {
+    try {
+      browser = await puppeteer.launch(
+        executablePath
+          ? { ...defaultLaunchOptions, executablePath }
+          : defaultLaunchOptions
+      );
+      break;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (!browser) {
+    throw lastError;
+  }
 
   const page = await browser.newPage();
 
