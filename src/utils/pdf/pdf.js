@@ -10,7 +10,8 @@ async function generatePDF(html) {
     '/usr/bin/chromium-browser',
     '/usr/bin/chromium',
     '/usr/bin/google-chrome',
-    '/usr/bin/google-chrome-stable'
+    '/usr/bin/google-chrome-stable',
+    'usr/bin/brave-browser',
   ].filter(Boolean);
 
   let browser;
