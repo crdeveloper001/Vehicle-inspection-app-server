@@ -22,6 +22,28 @@ export const getClientById = async (req, res) => {
   }
 };
 
+export const searchClients = async (req, res) => {
+  try {
+    const { name, phone } = req.query;
+    if (!name && !phone) {
+      return res.status(400).json({ message: 'Please provide name or phone to search' });
+    }
+
+    const searchConditions = [];
+    if (name) {
+      searchConditions.push({ name: { $regex: name, $options: 'i' } });
+    }
+    if (phone) {
+      searchConditions.push({ phone: { $regex: phone, $options: 'i' } });
+    }
+
+    const clients = await Client.find({ $or: searchConditions }).sort({ createdOn: -1 });
+    return res.status(200).json(clients);
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to search clients', error: error.message });
+  }
+};
+
 export const createClient = async (req, res) => {
   try {
     const newClient = new Client(req.body);

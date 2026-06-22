@@ -14,13 +14,14 @@ const createInspectionAndPDF = async (req, res) => {
     // 💾 1. Guardar en Mongo
     const inspection = new Inspection({
       ...dataFromFrontend,
-      createdBy: req.user.id
+      createdBy: req.createdByUserId || null, // Asignar el ID del usuario autenticado si está disponible
     });
 
     await inspection.save();
 
     // 🧠 2. Preparar datos para template
     const data = {
+      _id: null,
       fecha: new Date().toLocaleDateString(),
       clientName: inspection.clientName,
       clientLastname: inspection.clientLastname,
@@ -208,7 +209,8 @@ const updateInspectionSelected = async (req, res) => {
       "body",
       "interior",
       "tires",
-      "conclusion"
+      "conclusion",
+      "selected"
     ];
 
     allowedFields.forEach((field) => {

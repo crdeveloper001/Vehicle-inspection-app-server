@@ -22,7 +22,7 @@ mongoose
   .then(() => console.log("MongoDB conectado"))
   .catch((err) => console.error(err));
 
-// Routes
+// Routes use api/featureName
 app.use("/api/auth", auth_Routes);
 app.use("/api/profiles", profile_Routes);
 app.use("/api/inspections", purchase_review_reporte_routes);

@@ -5,6 +5,7 @@ import {
   createClient,
   updateClient,
   deleteClient,
+  searchClients
 } from "../controllers/clients.controller.js";
 
 const router = Router();
@@ -15,6 +16,9 @@ router.post("/", createClient);
 // Get all clients
 router.get("/", getAllClients);
 
+// Search clients by name or phone
+router.get("/search", searchClients);
+
 // Get client by ID
 router.get("/:id", getClientById);
 
@@ -23,5 +27,6 @@ router.put("/:id", updateClient);
 
 // Delete client by ID
 router.delete("/:id", deleteClient);
+
 
 export default router;
