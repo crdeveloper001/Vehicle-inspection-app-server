@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import PurchaseReviewReport from "./PurchaseReviewReport.js";
+import PurchaseReviewReport from "../Inspections/PurchaseReviewReport.js";
+import ClientsVehiclesDetails from "../clientsSchema/ClientsVehiclesDetails.js";
 
-
-const ClientsSchema = new mongoose.Schema({
+const ClientsDetailsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -32,6 +32,11 @@ const ClientsSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  VehiclesDetails: {
+    type: [ClientsVehiclesDetails.schema],
+
+    default: [],
+  },
   CurrentReports: {
     type: [PurchaseReviewReport.schema],
     default: [],
@@ -46,4 +51,4 @@ const ClientsSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Clients', ClientsSchema);
+export default mongoose.model('ClientsDetails', ClientsDetailsSchema);

@@ -1,4 +1,4 @@
-import User from "../models/Users.js";
+import User from "../Schemas/systemUsers/Users.js";
 import bcrypt from "bcrypt";
 
 // Create a new profile

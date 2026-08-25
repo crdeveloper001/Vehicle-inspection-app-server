@@ -1,5 +1,5 @@
-import Inspection from "../models/PurchaseReviewReport.js";
-import generateHTML from "../utils/templates/template.js";
+import Inspection from "../Schemas/Inspections/PurchaseReviewReport.js";
+import generateReportForInspection from "../utils/templates/template.js";
 import generatePDF from "../utils/pdf/pdf.js";
 
 const createInspectionAndPDF = async (req, res) => {
@@ -64,7 +64,7 @@ const createInspectionAndPDF = async (req, res) => {
     };
 
     // 🧾 3. HTML
-    const html = generateHTML(data);
+    const html = generateReportForInspection(data);
 
     // 📄 4. PDF
     const pdfBuffer = await generatePDF(html);
@@ -140,7 +140,7 @@ const downloadInspectionPDF = async (req, res) => {
     };
 
     // 🧾 Generar HTML
-    const html = generateHTML(data);
+    const html = generateReportForInspection(data);
 
     // 📄 Generar PDF
     const pdfBuffer = await generatePDF(html);

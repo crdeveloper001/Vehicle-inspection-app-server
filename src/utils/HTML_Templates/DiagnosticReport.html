@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Diagnostic Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border-top: 6px solid #667eea;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 25px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .header p {
+
+            color: #667eea;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .report-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+            font-size: 14px;
+        }
+
+        .meta-card {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .meta-card .info-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #e8e8f0;
+        }
+
+        .meta-card .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #2c3e50;
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: #555;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .client-section,
+        .vehicle-section,
+        .diagnostic-section {
+            margin-bottom: 40px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .field-group {
+            margin-bottom: 20px;
+        }
+
+        .field-label {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        .field-value {
+            color: #555;
+            font-size: 16px;
+            padding: 12px 15px;
+            background-color: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .list-section {
+            margin: 20px 0;
+        }
+
+        .list-title {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .list-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: #667eea;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .list-item {
+            background-color: #f8f9ff;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            border-left: 4px solid #27ae60;
+            color: #555;
+            font-size: 15px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .empty-list {
+            color: #999;
+            font-style: italic;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: right;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .total-amount {
+            color: #fff;
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-valid {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #155724;
+        }
+
+        .status-invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #721c24;
+        }
+
+        .date-section {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 30px;
+            text-align: center;
+            border-top: 2px solid #e8e8f0;
+            padding-top: 20px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e8e8f0;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                border-top: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔧 Vehicle Diagnostic Report</h1>
+            <p>Professional Vehicle Inspection & Diagnostic Assessment</p>
+        </div>
+
+        <!-- Report Metadata -->
+        <div class="report-meta">
+            <div class="meta-card">
+                <div class="info-row">
+                    <span class="info-label">Report ID:</span>
+                    <span class="info-value">{{reportId}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Technician:</span>
+                    <span class="info-value">{{DiagnosticTechinician}}</span>
+                </div>
+            </div>
+            <div class="meta-card">
+                <div class="info-row">
+                    <span class="info-label">Report Date:</span>
+                    <span class="info-value">{{DiagnosticCreationDate}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Inspection Time:</span>
+                    <span class="info-value">{{inspectionTime}}</span>
+                </div>
+            </div>
+            <div class="meta-card">
+                <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">
+                        <span class="status-badge status-valid">{{#if DiagnosticValid}}✓ Valid{{else}}✗ Invalid{{/if}}</span>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Validity Period:</span>
+                    <span class="info-value">12 Months</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Section -->
+        <div class="client-section">
+            <div class="section-title">👤 Client Information</div>
+            <div class="two-column">
+                <div>
+                    <div class="field-group">
+                        <span class="field-label">Full Name:</span>
+                        <span class="field-value">{{ClientDetails.[0].FirstName}} {{ClientDetails.[0].LastName}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Phone:</span>
+                        <span class="field-value">{{ClientDetails.[0].PhoneNumber}}</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="field-group">
+                        <span class="field-label">Email:</span>
+                        <span class="field-value">{{ClientDetails.[0].Email}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Address:</span>
+                        <span class="field-value">{{ClientDetails.[0].Address}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Section -->
+        <div class="vehicle-section">
+            <div class="section-title">🚗 Vehicle Information</div>
+            <div class="two-column">
+                <div>
+                    <div class="field-group">
+                        <span class="field-label">Make & Model:</span>
+                        <span class="field-value">{{VehicleDetails.[0].Make}} {{VehicleDetails.[0].Model}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Year:</span>
+                        <span class="field-value">{{VehicleDetails.[0].Year}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Mileage:</span>
+                        <span class="field-value">{{VehicleDetails.[0].Mileage}} km</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="field-group">
+                        <span class="field-label">Registration Plate:</span>
+                        <span class="field-value">{{VehicleDetails.[0].RegistrationPlate}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">VIN:</span>
+                        <span class="field-value">{{VehicleDetails.[0].VIN}}</span>
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Engine Type:</span>
+                        <span class="field-value">{{VehicleDetails.[0].EngineType}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnostic Section -->
+        <div class="diagnostic-section">
+            <div class="section-title">🔍 Diagnostic Details</div>
+
+            <!-- Technician Info -->
+            <div class="field-group">
+                <span class="field-label">Technician:</span>
+                <span class="field-value">{{DiagnosticTechinician}}</span>
+            </div>
+
+            <!-- Diagnostic Categories -->
+            <div class="list-section">
+                <div class="list-title">Diagnostic Categories Performed</div>
+                {{#each DiagnosticName}}
+                <div class="list-item">✓ {{this}}</div>
+                {{/each}}
+            </div>
+
+            <!-- Comments -->
+            <div class="list-section">
+                <div class="list-title">Technician Comments</div>
+                {{#each DiagnosticComments}}
+                <div class="list-item">• {{this}}</div>
+                {{/each}}
+            </div>
+
+            <!-- Recommended Spares -->
+            <div class="list-section">
+                <div class="list-title">Recommended Spares & Parts</div>
+                {{#each DiagnosticSpares}}
+                <div class="list-item">• {{this}}</div>
+                {{/each}}
+            </div>
+
+            <!-- Total Section -->
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Diagnostic Service Total:</span>
+                </div>
+                <div class="total-amount">${{DiagnosticTotal}}</div>
+            </div>
+        </div>
+
+        <!-- Date Info -->
+        <div class="date-section">
+            <p>📅 Report Generated: {{formatDate DiagnosticCreationDate}}</p>
+            <p style="margin-top: 8px; font-size: 12px; opacity: 0.8;">{{#if DiagnosticValid}}✓ This report is valid for inspection and maintenance purposes. Please retain for your records.{{/if}}</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2024 Professional Vehicle Inspection Services. All rights reserved.</p>
+            <p style="margin-top: 5px; font-size: 11px;">For questions or to schedule follow-up service, contact us at support@vehicleinspection.com</p>
+        </div>
+    </div>
+</body>
+</html>

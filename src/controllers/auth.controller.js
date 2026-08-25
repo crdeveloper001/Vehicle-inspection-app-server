@@ -1,4 +1,4 @@
-import User from "../models/Users.js";
+import User from "../Schemas/systemUsers/Users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -30,7 +30,7 @@ export const register = async (req, res) => {
       await user.save();
 
       res.json({ message: "Usuario creado con exito" });
-    }else{
+    } else {
       res.status(400).json({ message: "Invalid profile state" });
     }
 

@@ -1,4 +1,4 @@
-import Client from '../models/Clients.js';
+import Client from '../Schemas/clientsSchema/ClientsDetails.js';
 
 export const getAllClients = async (req, res) => {
   try {
@@ -46,7 +46,13 @@ export const searchClients = async (req, res) => {
 
 export const createClient = async (req, res) => {
   try {
-    const newClient = new Client(req.body);
+    const { VehiclesDetails, ...clientData } = req.body;
+    const newClient = new Client(clientData);
+
+    if (VehiclesDetails && Array.isArray(VehiclesDetails)) {
+      newClient.VehiclesDetails = VehiclesDetails;
+    }
+
     const savedClient = await newClient.save();
     return res.status(201).json(savedClient);
   } catch (error) {
@@ -57,7 +63,14 @@ export const createClient = async (req, res) => {
 export const updateClient = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedClient = await Client.findByIdAndUpdate(id, req.body, {
+    const { VehiclesDetails, ...updateData } = req.body;
+
+    const updatePayload = { ...updateData };
+    if (VehiclesDetails && Array.isArray(VehiclesDetails)) {
+      updatePayload.VehiclesDetails = VehiclesDetails;
+    }
+
+    const updatedClient = await Client.findByIdAndUpdate(id, updatePayload, {
       new: true,
       runValidators: true,
     });
