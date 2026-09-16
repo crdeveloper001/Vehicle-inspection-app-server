@@ -1,0 +1,142 @@
+@page {
+    size: A4;
+    margin: 20mm;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2c3e50;
+    font-size: 13px;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #007BFF;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.meta {
+    text-align: right;
+    font-size: 12px;
+    color: #555;
+}
+
+/* CARDS */
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 15px;
+}
+
+.card h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+/* GRID */
+.grid {
+    display: flex;
+    gap: 20px;
+}
+
+.col {
+    flex: 1;
+}
+
+.field {
+    margin-bottom: 6px;
+}
+
+.label {
+    font-weight: bold;
+    color: #555;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    background: #007BFF;
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* STATUS BADGES */
+.badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+}
+
+.ok {
+    background: #28a745;
+}
+
+.bad {
+    background: #dc3545;
+}
+
+/* CONCLUSION */
+.conclusion {
+    background: #f4f6f8;
+    padding: 10px;
+    border-left: 4px solid #007BFF;
+    margin-top: 10px;
+}
+
+/* SIGNATURE */
+.signature {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signature div {
+    text-align: center;
+    width: 40%;
+}
+
+.line {
+    border-top: 1px solid #000;
+    margin-top: 40px;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+}

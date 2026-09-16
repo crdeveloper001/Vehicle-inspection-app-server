@@ -1,5 +1,6 @@
 import DiagnosticAndQuote from "../Schemas/diagnostics/DiagnosticAndQuote.js";
 
+
 // Create a new diagnostic and quote
 export const createDiagnosticAndQuote = async (req, res) => {
   try {

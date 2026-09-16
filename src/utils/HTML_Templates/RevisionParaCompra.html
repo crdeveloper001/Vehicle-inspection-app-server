@@ -1,258 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<title>Reporte de Inspección Vehicular</title>
+  <meta charset="UTF-8">
+  <title>Reporte de Inspección Vehicular</title>
 
-<style>
-  @page {
-    size: A4;
-    margin: 20mm;
-  }
 
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #2c3e50;
-    font-size: 13px;
-  }
-
-  h1, h2 {
-    margin: 0;
-  }
-
-  /* HEADER */
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid #007BFF;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-
-  .title {
-    font-size: 22px;
-    font-weight: bold;
-  }
-
-  .meta {
-    text-align: right;
-    font-size: 12px;
-    color: #555;
-  }
-
-  /* CARDS */
-  .card {
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 12px;
-    margin-top: 15px;
-  }
-
-  .card h2 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #007BFF;
-  }
-
-  /* GRID */
-  .grid {
-    display: flex;
-    gap: 20px;
-  }
-
-  .col {
-    flex: 1;
-  }
-
-  .field {
-    margin-bottom: 6px;
-  }
-
-  .label {
-    font-weight: bold;
-    color: #555;
-  }
-
-  /* TABLE */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-
-  th {
-    background: #007BFF;
-    color: white;
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  tr:nth-child(even) {
-    background: #f9f9f9;
-  }
-
-  /* STATUS BADGES */
-  .badge {
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    color: white;
-  }
-
-  .ok {
-    background: #28a745;
-  }
-
-  .bad {
-    background: #dc3545;
-  }
-
-  /* CONCLUSION */
-  .conclusion {
-    background: #f4f6f8;
-    padding: 10px;
-    border-left: 4px solid #007BFF;
-    margin-top: 10px;
-  }
-
-  /* SIGNATURE */
-  .signature {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .signature div {
-    text-align: center;
-    width: 40%;
-  }
-
-  .line {
-    border-top: 1px solid #000;
-    margin-top: 40px;
-  }
-
-  /* FOOTER */
-  .footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 11px;
-    color: #999;
-  }
-
-</style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="title">Reporte de Inspección Para Compra Vehicular</div>
-  <div class="meta">
-    Fecha: {{createdAt}} <br>
-    ID: {{_id}}
-  </div>
-</div>
-
-<!-- CLIENTE -->
-<div class="card">
-  <h2>Información del Cliente</h2>
-  <div class="grid">
-    <div class="col">
-      <div class="field"><span class="label">Nombre:</span> {{clientName}}</div>
-      <div class="field"><span class="label">Apellido:</span> {{clientLastname}}</div>
-    </div>
-    <div class="col">
-      <div class="field"><span class="label">Teléfono:</span> {{clientPhone}}</div>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="title">Reporte de Inspección Para Compra Vehicular</div>
+    <div class="meta">
+      Fecha: {{createdAt}} <br>
+      ID: {{_id}}
     </div>
   </div>
-</div>
 
-<!-- INFO VEHICULO -->
-<div class="card">
-  <h2>Información del Vehículo</h2>
-  <div class="grid">
-    <div class="col">
-      <div class="field"><span class="label">Marca:</span> {{make}}</div>
-      <div class="field"><span class="label">Modelo:</span> {{model}}</div>
-      <div class="field"><span class="label">Año:</span> {{year}}</div>
-    </div>
-    <div class="col">
-      <div class="field"><span class="label">Placa:</span> {{plate}}</div>
-      <div class="field"><span class="label">VIN:</span> {{vin}}</div>
-      <div class="field"><span class="label">Kilometraje:</span> {{mileage}}</div>
+  <!-- CLIENTE -->
+  <div class="card">
+    <h2>Información del Cliente</h2>
+    <div class="grid">
+      <div class="col">
+        <div class="field"><span class="label">Nombre:</span> {{clientName}}</div>
+        <div class="field"><span class="label">Apellido:</span> {{clientLastname}}</div>
+      </div>
+      <div class="col">
+        <div class="field"><span class="label">Teléfono:</span> {{clientPhone}}</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ESTADO GENERAL -->
-<div class="card">
-  <h2>Estado General</h2>
-  <table>
-  <tr>
-    <th>Componente</th>
-    <th>Estado</th>
-    <th>Observaciones</th>
-  </tr>
-
-  {{#each componentes}}
-  <tr>
-    <td>{{nombre}}</td>
-
-    <td>
-      <span class="{{estadoClass}}">
-        {{estado}}
-      </span>
-    </td>
-
-    <td>{{obs}}</td>
-  </tr>
-  {{/each}}
-
-</table>
-</div>
-
-<!-- INSPECCION VISUAL -->
-<div class="card">
-  <h2>Inspección Visual</h2>
-  <table>
-    <tr>
-      <th>Área</th>
-      <th>Condición</th>
-    </tr>
-    <tr>
-      <td>Carrocería</td>
-      <td>{{body}}</td>
-    </tr>
-    <tr>
-      <td>Interior</td>
-      <td>{{interior}}</td>
-    </tr>
-    <tr>
-      <td>Llantas</td>
-      <td>{{tires}}</td>
-    </tr>
-  </table>
-</div>
-
-<!-- CONCLUSION -->
-<div class="card">
-  <h2>Conclusión</h2>
-  <div class="conclusion">
-    {{conclusion}}
+  <!-- INFO VEHICULO -->
+  <div class="card">
+    <h2>Información del Vehículo</h2>
+    <div class="grid">
+      <div class="col">
+        <div class="field"><span class="label">Marca:</span> {{make}}</div>
+        <div class="field"><span class="label">Modelo:</span> {{model}}</div>
+        <div class="field"><span class="label">Año:</span> {{year}}</div>
+      </div>
+      <div class="col">
+        <div class="field"><span class="label">Placa:</span> {{plate}}</div>
+        <div class="field"><span class="label">VIN:</span> {{vin}}</div>
+        <div class="field"><span class="label">Kilometraje:</span> {{mileage}}</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="footer">
- Reporte Generado Jefry Chacon / Mecanico Automotriz
-</div>
+  <!-- ESTADO GENERAL -->
+  <div class="card">
+    <h2>Estado General</h2>
+    <table>
+      <tr>
+        <th>Componente</th>
+        <th>Estado</th>
+        <th>Observaciones</th>
+      </tr>
+
+      {{#each componentes}}
+      <tr>
+        <td>{{nombre}}</td>
+
+        <td>
+          <span class="{{estadoClass}}">
+            {{estado}}
+          </span>
+        </td>
+
+        <td>{{obs}}</td>
+      </tr>
+      {{/each}}
+
+    </table>
+  </div>
+
+  <!-- INSPECCION VISUAL -->
+  <div class="card">
+    <h2>Inspección Visual</h2>
+    <table>
+      <tr>
+        <th>Área</th>
+        <th>Condición</th>
+      </tr>
+      <tr>
+        <td>Carrocería</td>
+        <td>{{body}}</td>
+      </tr>
+      <tr>
+        <td>Interior</td>
+        <td>{{interior}}</td>
+      </tr>
+      <tr>
+        <td>Llantas</td>
+        <td>{{tires}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="card">
+    <h2>Conclusión</h2>
+    <div class="conclusion">
+      {{conclusion}}
+    </div>
+  </div>
+
+  <div class="footer">
+    Reporte Generado Jefry Chacon / Mecanico Automotriz
+  </div>
 
 </body>
+
 </html>

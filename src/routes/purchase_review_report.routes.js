@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
-import * as controller from "../controllers/purchasereviewreport.controller.js";
+import * as controller from "../controllers/purchase_review_report.controller.js";
 
 const router = Router();
 
@@ -19,5 +19,5 @@ router.get("/:id/pdf", controller.downloadInspectionPDF);
 router.get("/", controller.getAllInspections);
 //actualizar el campo selected de una inspección
 router.put("/:id", controller.updateInspectionSelected);
-
+router.delete("/:id", controller.deleteInspectionById);
 export default router;
