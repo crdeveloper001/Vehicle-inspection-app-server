@@ -60,7 +60,7 @@ const generateHTMLForDiagnosticAndQuote = (data) => {
 
   const cssFilePath = path.join(
     __dirname,
-    "../HTML_Templates/DiagnosticReportStyles.css"
+    "../HTML_Templates/DiagnosticReport.css"
   );
 
 

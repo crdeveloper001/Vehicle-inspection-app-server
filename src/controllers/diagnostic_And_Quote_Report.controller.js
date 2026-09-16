@@ -16,7 +16,7 @@ const templatePath = path.resolve(
 
 const stylesPath = path.resolve(
 	__dirname,
-	"../utils/HTML_Templates/DiagnosticReportStyles.css"
+	"../utils/HTML_Templates/DiagnosticReport.css"
 );
 
 Handlebars.registerHelper("formatDate", (date) => {
