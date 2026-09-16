@@ -1,25 +1,52 @@
 import puppeteer from "puppeteer";
 
-async function generatePDF(html) {
-  let browser;
+let browser = null;
+let browserPromise = null;
 
-  try {
-    console.log("Launching Puppeteer...");
+const getBrowser = async () => {
+  if (browser) {
+    return browser;
+  }
 
-    browser = await puppeteer.launch({
+  if (browserPromise) {
+    return browserPromise;
+  }
+
+  browserPromise = puppeteer
+    .launch({
       headless: true,
-
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
       ],
+    })
+    .then((launchedBrowser) => {
+      browser = launchedBrowser;
+      browserPromise = null;
+
+      launchedBrowser.on("disconnected", () => {
+        browser = null;
+        browserPromise = null;
+      });
+
+      return browser;
+    })
+    .catch((error) => {
+      browserPromise = null;
+      throw error;
     });
 
-    console.log("Puppeteer browser launched successfully.");
+  return browserPromise;
+};
 
-    const page = await browser.newPage();
+const generatePDF = async (html) => {
+  const browser = await getBrowser();
+  let page;
+
+  try {
+    page = await browser.newPage();
 
     await page.setViewport({
       width: 1280,
@@ -28,21 +55,20 @@ async function generatePDF(html) {
     });
 
     await page.setContent(html, {
-      waitUntil: "networkidle0",
+      waitUntil: "domcontentloaded",
+      timeout: 10000,
     });
 
-    // Wait for fonts
     await page.evaluate(async () => {
       if (document.fonts?.ready) {
         await document.fonts.ready;
       }
     });
 
-    const pdf = await page.pdf({
+    return await page.pdf({
       format: "A4",
       printBackground: true,
       preferCSSPageSize: true,
-
       margin: {
         top: "20mm",
         bottom: "20mm",
@@ -50,19 +76,32 @@ async function generatePDF(html) {
         right: "15mm",
       },
     });
-
-    return pdf;
-
-  } catch (error) {
-    console.error("Puppeteer PDF generation error:", error);
-
-    throw error;
-
   } finally {
-    if (browser) {
-      await browser.close();
+    if (page) {
+      await page.close();
     }
   }
-}
+};
+
+const closeBrowser = async () => {
+  if (browser) {
+    try {
+      await browser.close();
+    } finally {
+      browser = null;
+      browserPromise = null;
+    }
+  }
+};
+
+process.on("SIGTERM", async () => {
+  await closeBrowser();
+  process.exit(0);
+});
+
+process.on("SIGINT", async () => {
+  await closeBrowser();
+  process.exit(0);
+});
 
 export default generatePDF;
