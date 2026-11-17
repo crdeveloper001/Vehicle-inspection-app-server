@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authMiddleware } from "../middleware/auth.middleware.js";
+import { authMiddleware } from "../../../shared/middleware/auth.middleware.js";
 import * as controller from "../controllers/purchase_review_report.controller.js";
 
 const router = Router();

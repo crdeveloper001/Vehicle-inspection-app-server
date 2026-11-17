@@ -1,4 +1,4 @@
-import DiagnosticAndQuote from "../Schemas/diagnostics/DiagnosticAndQuote.js";
+import DiagnosticAndQuote from "../models/DiagnosticAndQuote.js";
 
 
 // Create a new diagnostic and quote

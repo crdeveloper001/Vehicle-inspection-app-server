@@ -1,4 +1,4 @@
-import Client from '../Schemas/clientsSchema/ClientsDetails.js';
+import Client from '../models/ClientsDetails.js';
 
 export const getAllClients = async (req, res) => {
   try {

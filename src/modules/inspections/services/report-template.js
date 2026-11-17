@@ -12,11 +12,11 @@ const generateReportForInspection = (data) => {
 
   const htmlFilePath = path.join(
     __dirname,
-    "../HTML_Templates/RevisionParaCompra.html"
+    "../templates/RevisionParaCompra.html"
   );
   const cssFilePath = path.join(
     __dirname,
-    "../HTML_Templates/RevisionParaCompra.css"
+    "../templates/RevisionParaCompra.css"
   );
 
   const htmlSource = fs.readFileSync(
@@ -48,58 +48,4 @@ ${cssSource}
   return styledHtml; 
 };
 
-const generateHTMLForDiagnosticAndQuote = (data) => {
-  // ==========================================
-  // File paths
-  // ==========================================
-
-  const htmlFilePath = path.join(
-    __dirname,
-    "../HTML_Templates/DiagnosticAndQuote.html"
-  );
-
-  const cssFilePath = path.join(
-    __dirname,
-    "../HTML_Templates/DiagnosticReport.css"
-  );
-
-
-  const htmlSource = fs.readFileSync(
-    htmlFilePath,
-    "utf8"
-  );
-
-  const cssSource = fs.readFileSync(
-    cssFilePath,
-    "utf8"
-  );
-
-  // ==========================================
-  // Compile Handlebars
-  // ==========================================
-
-  const template = handlebars.compile(htmlSource);
-
-  const html = template(data);
-
-  // ==========================================
-  // Inject CSS into <head>
-  // ==========================================
-
-  const styledHtml = html.replace(
-    /<\/head>/i,
-    `
-<style>
-${cssSource}
-</style>
-</head>
-`
-  );
-
-  return styledHtml;
-};
-
-export default {
-  generateReportForInspection,
-  generateHTMLForDiagnosticAndQuote
-};
+export default { generateReportForInspection };

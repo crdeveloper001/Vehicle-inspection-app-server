@@ -1,6 +1,6 @@
-import Inspection from "../Schemas/Inspections/PurchaseReviewReport.js";
-import templateUtils from "../utils/templates/template.js";
-import generatePDF from "../utils/pdf/pdf.js";
+import Inspection from "../models/PurchaseReviewReport.js";
+import templateUtils from "../services/report-template.js";
+import generatePDF from "../../../shared/pdf/pdf.js";
 
 // ============================================================
 // MAP INSPECTION DATA FOR TEMPLATE

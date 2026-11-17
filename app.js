@@ -2,12 +2,10 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-// Import routes
-import auth_Routes from "./src/routes/auth.routes.js";
-import purchase_review_reporte_routes from "./src/routes/purchase_review_report.routes.js";
-import profile_Routes from "./src/routes/profile.routes.js";
-import clients_Routes from "./src/routes/clients.route.js";
-import diagnosticAndQuoteRoutes from "./src/routes/diagnostic_and_quotes.routes.js";
+import { authRoutes, profileRoutes } from "./src/modules/users/index.js";
+import clientsRoutes from "./src/modules/clients/index.js";
+import inspectionsRoutes from "./src/modules/inspections/index.js";
+import diagnosticsRoutes from "./src/modules/diagnostics/index.js";
 
 dotenv.config();
 
@@ -24,11 +22,11 @@ mongoose
   .catch((err) => console.error(err));
 
 // Routes use api/featureName
-app.use("/api/auth", auth_Routes);
-app.use("/api/profiles", profile_Routes);
-app.use("/api/inspections", purchase_review_reporte_routes);
-app.use("/api/clients", clients_Routes);
-app.use("/api/diagnostics", diagnosticAndQuoteRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/profiles", profileRoutes);
+app.use("/api/inspections", inspectionsRoutes);
+app.use("/api/clients", clientsRoutes);
+app.use("/api/diagnostics", diagnosticsRoutes);
 
 
 app.listen(process.env.PORT, () => {

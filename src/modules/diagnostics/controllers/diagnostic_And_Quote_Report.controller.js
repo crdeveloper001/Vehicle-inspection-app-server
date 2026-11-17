@@ -3,20 +3,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
 
-import DiagnosticAndQuote from "../Schemas/diagnostics/DiagnosticAndQuote.js";
-import generatePDF from "../utils/pdf/pdf.js";
+import DiagnosticAndQuote from "../models/DiagnosticAndQuote.js";
+import generatePDF from "../../../shared/pdf/pdf.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const templatePath = path.resolve(
 	__dirname,
-	"../utils/HTML_Templates/DiagnosticReport.html"
+	"../templates/DiagnosticReport.html"
 );
 
 const stylesPath = path.resolve(
 	__dirname,
-	"../utils/HTML_Templates/DiagnosticReport.css"
+	"../templates/DiagnosticReport.css"
 );
 
 Handlebars.registerHelper("formatDate", (date) => {

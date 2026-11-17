@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const clientsVehiclesDetailsSchema = new mongoose.Schema(
+export const clientsVehiclesDetailsSchema = new mongoose.Schema(
     {
        
         VehicleName: {

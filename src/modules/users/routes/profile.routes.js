@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authMiddleware } from "../middleware/auth.middleware.js";
+import { authMiddleware } from "../../../shared/middleware/auth.middleware.js";
 import {
   createProfile,
   getAllProfiles,

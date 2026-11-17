@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const purchaseReviewReportSchema = new mongoose.Schema(
+export const purchaseReviewReportSchema = new mongoose.Schema(
   {
     //Client Information
     clientName: String,

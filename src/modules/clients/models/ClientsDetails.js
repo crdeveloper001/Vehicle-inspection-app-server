@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import PurchaseReviewReport from "../Inspections/PurchaseReviewReport.js";
-import ClientsVehiclesDetails from "../clientsSchema/ClientsVehiclesDetails.js";
+import { purchaseReviewReportSchema } from "../../inspections/contracts.js";
+import { clientsVehiclesDetailsSchema } from "./ClientsVehiclesDetails.js";
 
 const ClientsDetailsSchema = new mongoose.Schema({
   name: {
@@ -33,12 +33,12 @@ const ClientsDetailsSchema = new mongoose.Schema({
     default: false,
   },
   VehiclesDetails: {
-    type: [ClientsVehiclesDetails.schema],
+    type: [clientsVehiclesDetailsSchema],
 
     default: [],
   },
   CurrentReports: {
-    type: [PurchaseReviewReport.schema],
+    type: [purchaseReviewReportSchema],
     default: [],
   },
   createdOn: {
