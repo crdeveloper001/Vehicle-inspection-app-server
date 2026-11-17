@@ -52,3 +52,25 @@ export const logApiRequest = (req, res, next) => {
 
   next();
 };
+
+export const getLogs = async (_req, res) => {
+  try {
+    const logs = await ApiLog.find()
+      .sort({ date: -1 })
+      .limit(200)
+      .populate("actor", "name lastName email")
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      count: logs.length,
+      data: logs,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error retrieving logs",
+      error: error.message,
+    });
+  }
+};

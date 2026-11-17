@@ -6,7 +6,7 @@ import { authRoutes, profileRoutes } from "./src/modules/users/index.js";
 import clientsRoutes from "./src/modules/clients/index.js";
 import inspectionsRoutes from "./src/modules/inspections/index.js";
 import diagnosticsRoutes from "./src/modules/diagnostics/index.js";
-import { logApiRequest } from "./src/modules/logs/index.js";
+import { logApiRequest, logsRoutes } from "./src/modules/logs/index.js";
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ app.use("/api/profiles", profileRoutes);
 app.use("/api/inspections", inspectionsRoutes);
 app.use("/api/clients", clientsRoutes);
 app.use("/api/diagnostics", diagnosticsRoutes);
+app.use("/api/logs", logsRoutes);
 
 
 app.listen(process.env.PORT, () => {
