@@ -6,6 +6,7 @@ import { authRoutes, profileRoutes } from "./src/modules/users/index.js";
 import clientsRoutes from "./src/modules/clients/index.js";
 import inspectionsRoutes from "./src/modules/inspections/index.js";
 import diagnosticsRoutes from "./src/modules/diagnostics/index.js";
+import { logApiRequest } from "./src/modules/logs/index.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use("/api", logApiRequest);
 
 // DB
 mongoose

@@ -1,0 +1,1 @@
+export { logApiRequest } from "./controller/logs.controller.js";
